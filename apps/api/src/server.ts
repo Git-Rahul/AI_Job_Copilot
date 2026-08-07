@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { profileRoutes } from "./routes/profile.js";
+import { profileRoutes} from "./routes/profile.js";
+import { skillRoutes } from "./routes/skills.js";
 
 const server = Fastify({
   logger: true,
@@ -8,9 +9,18 @@ const server = Fastify({
 
 await server.register(cors, {
   origin: "http://localhost:5173",
+    methods: [
+    "GET",
+    "HEAD",
+    "POST",
+    "PUT",
+    "DELETE",
+    "PATCH",
+  ],
 });
 
 await server.register(profileRoutes);
+await server.register(skillRoutes);
 
 server.get("/api/health", async () => {
   return {
@@ -19,7 +29,7 @@ server.get("/api/health", async () => {
     timestamp: new Date(),
   };
 });
-
+console.log("---------------",server.printRoutes());
 try {
   await server.listen({
     port: 3000,

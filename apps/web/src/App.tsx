@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react'
-import {api} from "./api/client";
+import { api } from "./api/client";
+import ProfileForm from "./components/ProfileForm";
 import './App.css'
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [, setMessage] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     api.get("/api/health")
-    .then((response)=>{
-      setMessage(response.data.service)
-    })
-    .catch((err)=>{
-      console.error(err);
-    });
-  },[]);
+      .then((response) => {
+        setMessage(response.data.service)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
   return (
     <>
-    <div>
-      <h1>AI JOB COPILOT 🚀</h1>
-      <p>{message}</p>
-    </div>
+      <div>
+        <h1>AI JOB COPILOT 🚀</h1>
+        <ProfileForm />
+      </div>
     </>
   )
 }
